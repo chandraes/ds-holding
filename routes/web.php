@@ -31,6 +31,9 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/divisi/store', [App\Http\Controllers\DivisiController::class, 'store'])->name('db.divisi.store');
             Route::patch('/divisi/{divisi}/update', [App\Http\Controllers\DivisiController::class, 'update'])->name('db.divisi.update');
             Route::delete('/divisi/destroy/{divisi}', [App\Http\Controllers\DivisiController::class, 'destroy'])->name('db.divisi.delete');
+
+            Route::get('/rekening', [App\Http\Controllers\RekeningController::class, 'index'])->name('db.rekening');
+            Route::patch('/rekening/{rekening}/update', [App\Http\Controllers\RekeningController::class, 'update'])->name('db.rekening.update');
         });
     });
 });
