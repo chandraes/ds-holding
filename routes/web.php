@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(route('login'));
 });
 
 Auth::routes([
@@ -23,6 +23,16 @@ Auth::routes([
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::group(['middleware' => ['role:admin']], function() {
+        Route::view('db', 'db.index')->name('db');
+        Route::prefix('db')->group(function () {
+            Route::get('/divisi', [App\Http\Controllers\DivisiController::class, 'index'])->name('db.divisi');
+            Route::post('/divisi/store', [App\Http\Controllers\DivisiController::class, 'store'])->name('db.divisi.store');
+            Route::patch('/divisi/{divisi}/update', [App\Http\Controllers\DivisiController::class, 'update'])->name('db.divisi.update');
+            Route::delete('/divisi/destroy/{divisi}', [App\Http\Controllers\DivisiController::class, 'destroy'])->name('db.divisi.delete');
+        });
+    });
 });
 
 

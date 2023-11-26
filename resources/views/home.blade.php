@@ -7,7 +7,7 @@
     <div class="row justify-content-left">
         @if (auth()->user()->role != 'supplier' && auth()->user()->role != 'investor')
         <div class="col-md-3 text-center">
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('db')}}" class="text-decoration-none">
                 <img src="{{asset('images/database.svg')}}" alt="" width="100">
                 <h2>DATABASE</h2>
             </a>
