@@ -31,7 +31,7 @@
         @endif
         @if (auth()->user()->role == 'admin')
         <div class="col-md-3 text-center">
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('pengaturan')}}" class="text-decoration-none">
                 <img src="{{asset('images/pengaturan.svg')}}" alt="" width="100">
                 <h2>PENGATURAN</h2>
             </a>

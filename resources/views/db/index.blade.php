@@ -12,7 +12,12 @@
                 <h2>DIVISI</h2>
             </a>
         </div>
-
+        <div class="col-md-3 mt-3 text-center">
+            <a href="{{route('db.rekening')}}" class="text-decoration-none">
+                <img src="{{asset('images/rekening.svg')}}" alt="" width="100">
+                <h2>REKENING TRANSAKSI</h2>
+            </a>
+        </div>
         <div class="col-md-3 mt-3 text-center">
             <a href="{{route('home')}}" class="text-decoration-none">
                 <img src="{{asset('images/dashboard.svg')}}" alt="" width="100">

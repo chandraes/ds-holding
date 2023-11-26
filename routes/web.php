@@ -25,6 +25,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
     Route::group(['middleware' => ['role:admin']], function() {
+        Route::view('pengaturan', 'pengaturan.index')->name('pengaturan');
+        Route::prefix('pengaturan')->group(function () {
+            Route::get('/wa', [App\Http\Controllers\WaController::class, 'index'])->name('pengaturan.wa');
+            Route::get('/wa/get-wa-group', [App\Http\Controllers\WaController::class, 'get_group_wa'])->name('pengaturan.wa.get-group-wa');
+            Route::patch('/wa/{group_wa}/update', [App\Http\Controllers\WaController::class, 'update'])->name('pengaturan.wa.update');
+
+            Route::get('/akun', [App\Http\Controllers\PengaturanController::class, 'index'])->name('pengaturan.akun');
+            Route::post('/akun/store', [App\Http\Controllers\PengaturanController::class, 'store'])->name('pengaturan.akun.store');
+            Route::patch('/akun/{akun}/update', [App\Http\Controllers\PengaturanController::class, 'update'])->name('pengaturan.akun.update');
+            Route::delete('/akun/{akun}/delete', [App\Http\Controllers\PengaturanController::class, 'destroy'])->name('pengaturan.akun.delete');
+        });
+
         Route::view('db', 'db.index')->name('db');
         Route::prefix('db')->group(function () {
             Route::get('/divisi', [App\Http\Controllers\DivisiController::class, 'index'])->name('db.divisi');
@@ -35,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/rekening', [App\Http\Controllers\RekeningController::class, 'index'])->name('db.rekening');
             Route::patch('/rekening/{rekening}/update', [App\Http\Controllers\RekeningController::class, 'update'])->name('db.rekening.update');
         });
+
+
     });
 });
 
