@@ -105,14 +105,16 @@ class KasKecil extends Model
         return $store;
     }
 
-    public function insertVoid($data, $id)
+    public function insertVoid($id)
     {
+        $rekening = Rekening::where('untuk', 'kas-kecil')->first();
+
         $update = $this->find($id);
         $data['uraian'] = "Void " . $update->uraian;
         $data['nominal_transaksi'] = $update->nominal_transaksi;
-        $data['nama_rek'] = $update->nama_rek;
-        $data['bank'] = $update->bank;
-        $data['no_rek'] = $update->no_rek;
+        $data['nama_rek'] = $rekening->nama_rek;
+        $data['bank'] = $rekening->bank;
+        $data['no_rek'] = $rekening->no_rek;
 
         $update->update(['void' => 1]);
 

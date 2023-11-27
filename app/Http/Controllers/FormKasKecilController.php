@@ -137,8 +137,14 @@ class FormKasKecilController extends Controller
         return redirect()->route('billing')->with('success', 'Data berhasil disimpan');
     }
 
-    public function void(Request $request)
+    public function void(KasKecil $id)
     {
+        $db = new KasKecil();
 
+        DB::beginTransaction();
+        $db->insertVoid($id->id);
+        DB::commit();
+
+        return redirect()->route('rekap.kas-kecil')->with('success', 'Data berhasil di Void');
     }
 }

@@ -9,7 +9,7 @@
         </div>
     </div>
     @include('swal')
-    <div class="flex-row justify-content-between mt-3">
+    <div class="row justify-content-between mt-3">
         <div class="col-md-6">
             <table class="table">
                 <tr class="text-center">
@@ -24,42 +24,43 @@
                 </tr>
             </table>
         </div>
+        <div class="col-md-6 mt-4">
+            <form action="{{route('rekap.kas-kecil')}}" method="get" class="row g-3">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <select class="form-select" name="bulan" id="bulan">
+                            <option value="1" {{$bulan=='01' ? 'selected' : '' }}>Januari</option>
+                            <option value="2" {{$bulan=='02' ? 'selected' : '' }}>Februari</option>
+                            <option value="3" {{$bulan=='03' ? 'selected' : '' }}>Maret</option>
+                            <option value="4" {{$bulan=='04' ? 'selected' : '' }}>April</option>
+                            <option value="5" {{$bulan=='05' ? 'selected' : '' }}>Mei</option>
+                            <option value="6" {{$bulan=='06' ? 'selected' : '' }}>Juni</option>
+                            <option value="7" {{$bulan=='07' ? 'selected' : '' }}>Juli</option>
+                            <option value="8" {{$bulan=='08' ? 'selected' : '' }}>Agustus</option>
+                            <option value="9" {{$bulan=='09' ? 'selected' : '' }}>September</option>
+                            <option value="10" {{$bulan=='10' ? 'selected' : '' }}>Oktober</option>
+                            <option value="11" {{$bulan=='11' ? 'selected' : '' }}>November</option>
+                            <option value="12" {{$bulan=='12' ? 'selected' : '' }}>Desember</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <select class="form-select" name="tahun" id="tahun">
+                            @foreach ($dataTahun as $d)
+                            <option value="{{$d->tahun}}" {{$d->tahun == $tahun ? 'selected' : ''}}>{{$d->tahun}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <button type="submit" class="btn btn-primary form-control" id="btn-cari">Tampilkan</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <div class="container-fluid mt-5">
     <form action="{{route('rekap.kas-kecil')}}" method="get">
-        <div class="row">
 
-            <div class="col-md-3 mb-3">
-                <label for="bulan" class="form-label">Bulan</label>
-                <select class="form-select" name="bulan" id="bulan">
-                    <option value="1" {{$bulan=='01' ? 'selected' : '' }}>Januari</option>
-                    <option value="2" {{$bulan=='02' ? 'selected' : '' }}>Februari</option>
-                    <option value="3" {{$bulan=='03' ? 'selected' : '' }}>Maret</option>
-                    <option value="4" {{$bulan=='04' ? 'selected' : '' }}>April</option>
-                    <option value="5" {{$bulan=='05' ? 'selected' : '' }}>Mei</option>
-                    <option value="6" {{$bulan=='06' ? 'selected' : '' }}>Juni</option>
-                    <option value="7" {{$bulan=='07' ? 'selected' : '' }}>Juli</option>
-                    <option value="8" {{$bulan=='08' ? 'selected' : '' }}>Agustus</option>
-                    <option value="9" {{$bulan=='09' ? 'selected' : '' }}>September</option>
-                    <option value="10" {{$bulan=='10' ? 'selected' : '' }}>Oktober</option>
-                    <option value="11" {{$bulan=='11' ? 'selected' : '' }}>November</option>
-                    <option value="12" {{$bulan=='12' ? 'selected' : '' }}>Desember</option>
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="tahun" class="form-label">Tahun</label>
-                <select class="form-select" name="tahun" id="tahun">
-                    @foreach ($dataTahun as $d)
-                    <option value="{{$d->tahun}}" {{$d->tahun == $tahun ? 'selected' : ''}}>{{$d->tahun}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-md-3 mb-3">
-                <label for="tahun" class="form-label">&nbsp;</label>
-                <button type="submit" class="btn btn-primary form-control" id="btn-cari">Tampilkan</button>
-            </div>
-        </div>
     </form>
 </div>
 <div class="container-fluid table-responsive ml-3">
@@ -75,6 +76,7 @@
                 <th class="text-center align-middle">Saldo</th>
                 <th class="text-center align-middle">Cash/Transfer</th>
                 <th class="text-center align-middle">Bank</th>
+                <th class="text-center align-middle">ACT</th>
             </tr>
             <tr class="table-warning">
                 <td class="text-center align-middle" colspan="3">Saldo Bulan
@@ -82,6 +84,7 @@
                 <td class="text-center align-middle"></td>
                 <td class="text-center align-middle"></td>
                 <td class="text-center align-middle">Rp. {{$dataSebelumnya ? $dataSebelumnya->nf_saldo : ''}}</td>
+                <td class="text-center align-middle"></td>
                 <td class="text-center align-middle"></td>
                 <td class="text-center align-middle"></td>
             </tr>
@@ -99,9 +102,38 @@
                     <td class="text-center align-middle">{{$d->nf_saldo}}</td>
                     <td class="text-center align-middle">{{$d->nama_rek}}</td>
                     <td class="text-center align-middle">{{$d->bank}}</td>
+                    <td class="text-center align-middle">
+                        {{-- void button --}}
+                        @if($d->void == 0 && auth()->user()->role == 'admin')
+                        <form action="{{route('billing.kas-kecil.void', ['id' => $d->id])}}" method="post" id="voidForm-{{$d->id}}">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Void</button>
+                        </form>
+                        @endif
+                    </td>
                 </tr>
+                <script>
+                     $('#voidForm-{{$d->id}}').submit(function(e){
+                        e.preventDefault();
+                        Swal.fire({
+                            title: 'Apakah data sudah benar?',
+                            text: "Pastikan data sudah benar sebelum disimpan!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Ya, simpan!'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                $('#spinner').show();
+                                this.submit();
+                            }
+                        })
+                    });
+                </script>
                 @endforeach
                 <tr>
+                    <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
@@ -122,6 +154,7 @@
                             {{$data->last() ? $data->last()->nf_saldo : ''}}
                         </strong>
                     </th>
+                    <th class="text-center align-middle"></th>
                     <th class="text-center align-middle"></th>
                     <th class="text-center align-middle"></th>
                 </tr>
