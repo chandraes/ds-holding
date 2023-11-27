@@ -39,7 +39,7 @@ class FormKasKecilController extends Controller
         $store = $kasBesar->insertKasKecil();
         $store2 = $db->insertMasuk($store->nomor_kas_kecil);
 
-        $group = GroupWa::where('untuk', 'kas-kecil')->first();
+        $group = GroupWa::where('untuk', 'kas-besar')->first();
 
         $pesan =    "🔴🔴🔴🔴🔴🔴🔴🔴🔴\n".
                     "*Form Permintaan Kas Kecil*\n".
@@ -66,12 +66,75 @@ class FormKasKecilController extends Controller
 
     public function keluar()
     {
-
+        return view('billing.kas-kecil.keluar');
     }
 
     public function keluar_store(Request $request)
     {
+        $data = $request->validate([
+            'nominal_transaksi' => 'required',
+            'uraian' => 'required',
+            'tipe' => 'required',
+            'nama_rek' => 'nullable',
+            'no_rek' => 'nullable',
+            'bank' => 'nullable',
+        ]);
 
+        if ($data['tipe'] == 1) {
+            $data['nama_rek'] = "Cash";
+        }
+
+        unset($data['tipe']);
+
+        $db = new KasKecil();
+
+        $nominal = str_replace('.', '', $data['nominal_transaksi']);
+
+        $saldo = $db->lastKasKecil()->saldo ?? 0;
+
+        if ($saldo < $nominal) {
+            return redirect()->back()->with('error', 'Saldo Kas Kecil tidak mencukupi');
+        }
+
+        DB::beginTransaction();
+
+        $store = $db->insertKeluar($data);
+
+        $group = GroupWa::where('untuk', 'team')->first();
+
+        if ($data['nama_rek'] == 'Cash') {
+            $pesan =    "==========================\n".
+                        "*Form Pengeluaran Kas Kecil*\n".
+                        "==========================\n\n".
+                        "Uraian: ".$store->uraian."\n\n".
+                        "Nilai : *Rp. ".$store->nf_nominal_transaksi."*\n\n".
+                        "Cash\n\n".
+                        "==========================\n".
+                        "Sisa Saldo Kas Kecil : \n".
+                        "Rp. ".$store->nf_saldo."\n\n".
+                        "Terima kasih 🙏🙏🙏\n";
+        } else {
+            $pesan =    "==========================\n".
+                        "*Form Pengeluaran Kas Kecil*\n".
+                        "==========================\n\n".
+                        "Uraian: ".$store->uraian."\n\n".
+                        "Nilai : *Rp. ".$store->nf_nominal_transaksi."*\n\n".
+                        "Ditransfer ke rek:\n\n".
+                        "Bank     : ".$store->bank."\n".
+                        "Nama    : ".$store->nama_rek."\n".
+                        "No. Rek : ".$store->no_rek."\n\n".
+                        "==========================\n".
+                        "Sisa Saldo Kas Kecil : \n".
+                        "Rp. ".$store->nf_saldo."\n\n".
+                        "Terima kasih 🙏🙏🙏\n";
+        }
+
+        $send = new StarSender($group->nama_group, $pesan);
+        $res = $send->sendGroup();
+
+        DB::commit();
+
+        return redirect()->route('billing')->with('success', 'Data berhasil disimpan');
     }
 
     public function void(Request $request)

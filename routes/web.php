@@ -56,8 +56,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::prefix('billing')->group(function () {
         Route::get('/kas-kecil/masuk', [App\Http\Controllers\FormKasKecilController::class, 'masuk'])->name('billing.kas-kecil.masuk');
         Route::post('/kas-kecil/masuk/store', [App\Http\Controllers\FormKasKecilController::class, 'masuk_store'])->name('kas-kecil.masuk.store');
+
         Route::get('/kas-kecil/keluar', [App\Http\Controllers\FormKasKecilController::class, 'keluar'])->name('billing.kas-kecil.keluar');
-        Route::post('/kas-kecil/keluar/store', [App\Http\Controllers\FormKasKecilController::class, 'keluar_store'])->name('billing.kas-kecil.keluar.store');
+        Route::post('/kas-kecil/keluar/store', [App\Http\Controllers\FormKasKecilController::class, 'keluar_store'])->name('kas-kecil.keluar.store');
     });
 
     Route::get('/rekap', [App\Http\Controllers\RekapController::class, 'index'])->name('rekap');

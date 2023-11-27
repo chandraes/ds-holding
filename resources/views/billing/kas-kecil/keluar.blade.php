@@ -34,7 +34,7 @@
                 <div class="mb-3">
                     <label for="tipe" class="form-label">Sistem Pembayaran</label>
                     <select class="form-select" name="tipe" id="tipe" onchange="tipeFun()" required>
-                        <option>-- Pilih transfer / cash --</option>
+                        <option value="">-- Pilih transfer / cash --</option>
                         <option value="1">Cash</option>
                         <option value="2">Transfer</option>
                     </select>
@@ -84,7 +84,7 @@
 
         <div class="d-grid gap-3 mt-3">
             <button class="btn btn-success" type="submit">Simpan</button>
-            <a href="{{route('billing.index')}}" class="btn btn-secondary" type="button">Batal</a>
+            <a href="{{route('billing')}}" class="btn btn-secondary" type="button">Batal</a>
         </div>
     </form>
 </div>

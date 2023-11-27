@@ -124,19 +124,19 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-center align-middle" colspan="3"><strong>GRAND TOTAL</strong></td>
-                    <td class="text-center align-middle"><strong>{{number_format($data->where('jenis',
-                            1)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></td>
-                    <td class="text-center align-middle text-danger"><strong>{{number_format($data->where('jenis',
-                            0)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></td>
+                    <th class="text-center align-middle" colspan="3"><strong>GRAND TOTAL</strong></th>
+                    <th class="text-center align-middle"><strong>{{number_format($data->where('jenis',
+                            1)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></th>
+                    <th class="text-center align-middle text-danger"><strong>{{number_format($data->where('jenis',
+                            0)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></th>
                     {{-- latest saldo --}}
-                    <td class="text-center align-middle">
+                    <th class="text-center align-middle">
                         <strong>
                             {{$data->last() ? number_format($data->last()->saldo, 0, ',', '.') : ''}}
                         </strong>
-                    </td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
+                    </th>
+                    <th class="text-center align-middle"></th>
+                    <th class="text-center align-middle"></th>
                 </tr>
             </tfoot>
         </table>
