@@ -49,6 +49,24 @@ Route::group(['middleware' => ['auth']], function() {
         });
 
 
+        Route::get('/isi-saldo', [App\Http\Controllers\BillingController::class, 'saldo_temp'])->name('isi-saldo');
+    });
+
+    Route::get('/billing', [App\Http\Controllers\BillingController::class, 'index'])->name('billing');
+    Route::prefix('billing')->group(function () {
+        Route::get('/kas-kecil/masuk', [App\Http\Controllers\FormKasKecilController::class, 'masuk'])->name('billing.kas-kecil.masuk');
+        Route::post('/kas-kecil/masuk/store', [App\Http\Controllers\FormKasKecilController::class, 'masuk_store'])->name('kas-kecil.masuk.store');
+        Route::get('/kas-kecil/keluar', [App\Http\Controllers\FormKasKecilController::class, 'keluar'])->name('billing.kas-kecil.keluar');
+        Route::post('/kas-kecil/keluar/store', [App\Http\Controllers\FormKasKecilController::class, 'keluar_store'])->name('billing.kas-kecil.keluar.store');
+    });
+
+    Route::get('/rekap', [App\Http\Controllers\RekapController::class, 'index'])->name('rekap');
+    Route::prefix('rekap')->group(function () {
+        Route::get('/kas-kecil', [App\Http\Controllers\RekapController::class, 'kas_kecil'])->name('rekap.kas-kecil');
+        Route::get('/kas-kecil/print/{bulan}/{tahun}', [App\Http\Controllers\RekapController::class, 'kas_kecil_print'])->name('rekap.kas-kecil.print');
+
+        Route::get('/kas-besar', [App\Http\Controllers\RekapController::class, 'kas_besar'])->name('rekap.kas-besar');
+        Route::get('/kas-besar/print/{bulan}/{tahun}', [App\Http\Controllers\RekapController::class, 'kas_besar_print'])->name('rekap.kas-besar.print');
     });
 });
 

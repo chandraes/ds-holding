@@ -11,18 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kas_kecils', function (Blueprint $table) {
+        Schema::create('kas_besars', function (Blueprint $table) {
             $table->id();
             $table->date('tanggal');
-            $table->string('nota')->nullable();
             $table->string('uraian')->nullable();
+            $table->integer('nomor_kas_kecil')->nullable();
             $table->boolean('jenis');
             $table->bigInteger('nominal_transaksi');
             $table->bigInteger('saldo');
             $table->string('nama_rek');
             $table->string('bank')->nullable();
             $table->string('no_rek')->nullable();
-            $table->boolean('void');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kas_kecils');
+        Schema::dropIfExists('kas_besars');
     }
 };

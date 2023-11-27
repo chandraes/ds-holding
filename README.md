@@ -3,7 +3,7 @@
 
 - Laravel UI untuk authentikasi dan scaffolding (composer require laravel/ui -> php artisan ui bootstrap --auth)
 - Laravel Lang for ID Language ("composer require laravel-lang/common --dev" -> "php artisan lang:add id" -> "php artisan lang:publish")
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
+- Barryvdh/laravel-dompdf for PDF ("composer require barryvdh/laravel-dompdf").
 - Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
 - Database agnostic [schema migrations](https://laravel.com/docs/migrations).
 - [Robust background job processing](https://laravel.com/docs/queues).

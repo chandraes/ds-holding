@@ -15,7 +15,7 @@
         @endif
         @if (auth()->user()->role != 'supplier' && auth()->user()->role != 'investor')
         <div class="col-md-3 text-center">
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('billing')}}" class="text-decoration-none">
                 <img src="{{asset('images/billing.svg')}}" alt="" width="100">
                 <h2>BILLING</h2>
             </a>
@@ -23,7 +23,7 @@
         @endif
         @if (auth()->user()->role != 'supplier')
         <div class="col-md-3 text-center">
-            <a href="#" class="text-decoration-none">
+            <a href="{{route('rekap')}}" class="text-decoration-none">
                 <img src="{{asset('images/rekap.svg')}}" alt="" width="100">
                 <h2>REKAP</h2>
             </a>
