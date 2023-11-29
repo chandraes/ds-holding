@@ -39,6 +39,13 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::view('db', 'db.index')->name('db');
         Route::prefix('db')->group(function () {
+
+            Route::get('/komisaris', [App\Http\Controllers\KomisarisController::class, 'index'])->name('komisaris');
+            Route::post('/komisaris/store', [App\Http\Controllers\KomisarisController::class, 'store'])->name('komisaris.store');
+            Route::patch('/komisaris/{komisaris}/update', [App\Http\Controllers\KomisarisController::class, 'update'])->name('komisaris.update');
+            Route::delete('/komisaris/destroy/{komisaris}', [App\Http\Controllers\KomisarisController::class, 'destroy'])->name('komisaris.delete');
+
+
             Route::get('/divisi', [App\Http\Controllers\DivisiController::class, 'index'])->name('db.divisi');
             Route::post('/divisi/store', [App\Http\Controllers\DivisiController::class, 'store'])->name('db.divisi.store');
             Route::patch('/divisi/{divisi}/update', [App\Http\Controllers\DivisiController::class, 'update'])->name('db.divisi.update');
