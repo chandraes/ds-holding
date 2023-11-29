@@ -36,7 +36,7 @@
         <div class="col-md-3 mt-3 text-center">
             <a href="{{route('persen-kas')}}" class="text-decoration-none">
                 <img src="{{asset('images/persen-kas.svg')}}" alt="" width="100">
-                <h2>PERSEN KAS</h2>
+                <h2>PERSENTASE PEMBAGIAN KAS</h2>
             </a>
         </div>
         <div class="col-md-3 mt-3 text-center">
