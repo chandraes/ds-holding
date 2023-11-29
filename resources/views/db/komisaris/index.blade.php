@@ -31,7 +31,10 @@
             <tr>
                 <th class="text-center align-middle" style="width: 5%">NO</th>
                 <th class="text-center align-middle">NAMA</th>
-                <th class="text-center align-middle">URL</th>
+                <th class="text-center align-middle">NO WA</th>
+                <th class="text-center align-middle">NAMA REK</th>
+                <th class="text-center align-middle">NO REK</th>
+                <th class="text-center align-middle">BANK</th>
                 <th class="text-center align-middle">ACT</th>
             </tr>
         </thead>
@@ -40,13 +43,16 @@
             <tr>
                 <td class="text-center align-middle">{{$loop->iteration}}</td>
                 <td class="text-center align-middle">{{$d->nama}}</td>
-                <td class="text-center align-middle">{{$d->url}}</td>
+                <td class="text-center align-middle">{{$d->no_wa}}</td>
+                <td class="text-center align-middle">{{$d->nama_rek}}</td>
+                <td class="text-center align-middle">{{$d->no_rek}}</td>
+                <td class="text-center align-middle">{{$d->bank}}</td>
                 <td class="text-center align-middle">
                     <div class="d-flex justify-content-center">
                         <button type="button" class="btn btn-primary m-2" data-bs-toggle="modal"
                             data-bs-target="#editInvestor" onclick="editInvestor({{$d}}, {{$d->id}})"><i
                                 class="fa fa-edit"></i></button>
-                        <form action="{{route('db.divisi.delete', $d)}}" method="post" id="deleteForm-{{$d->id}}">
+                        <form action="{{route('komisaris.delete', $d)}}" method="post" id="deleteForm-{{$d->id}}">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger m-2"><i class="fa fa-trash"></i></button>
@@ -94,6 +100,16 @@
         // Populate other fields...
         document.getElementById('editForm').action = '/db/divisi/' + id + '/update';
     }
+
+    var no_wa = new Cleave('#no_wa', {
+        delimiter: '-',
+        blocks: [4, 4, 8]
+    });
+
+    var no_rek = new Cleave('#no_rek', {
+        delimiter: '-',
+        blocks: [4, 4, 8]
+    });
 
     $('#data').DataTable({
         paging: false,

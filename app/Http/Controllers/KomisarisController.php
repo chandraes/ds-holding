@@ -18,7 +18,17 @@ class KomisarisController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'nama' => 'required',
+            'no_wa' => 'required',
+            'no_rek' => 'required',
+            'bank' => 'required',
+            'nama_rek' => 'required',
+        ]);
 
+        Komisaris::create($data);
+
+        return redirect()->back()->with('success', 'Data berhasil ditambahkan');
     }
 
     public function update(Request $request, Komisaris $komisaris)
