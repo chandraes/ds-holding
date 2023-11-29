@@ -109,34 +109,14 @@
 <script src="{{asset('assets/js/dt5.min.js')}}"></script>
 <script>
     function editInvestor(data, id) {
-        document.getElementById('edit_nama').value = data.nama;
-        document.getElementById('edit_no_wa').value = data.no_wa;
-        document.getElementById('edit_nama_rek').value = data.nama_rek;
-        document.getElementById('edit_no_rek').value = data.no_rek;
-        document.getElementById('edit_bank').value = data.bank;
+        document.getElementById('edit_komisaris_id').value = data.komisaris_id;
+        document.getElementById('edit_divisi_id').value = data.divisi_id;
+        document.getElementById('edit_persen').value = data.persen;
         // Populate other fields...
-        document.getElementById('editForm').action = '/db/komisaris/' + id + '/update';
+        document.getElementById('editForm').action = '/db/persen-divisi/' + id + '/update';
     }
 
-    // var no_wa = new Cleave('#no_wa', {
-    //     delimiter: '-',
-    //     blocks: [4, 4, 8]
-    // });
 
-    // var no_rek = new Cleave('#no_rek', {
-    //     delimiter: '-',
-    //     blocks: [4, 4, 8]
-    // });
-
-    // var edit_no_wa = new Cleave('#edit_no_wa', {
-    //     delimiter: '-',
-    //     blocks: [4, 4, 8]
-    // });
-
-    // var edit_no_rek = new Cleave('#edit_no_rek', {
-    //     delimiter: '-',
-    //     blocks: [4, 4, 8]
-    // });
 
     $('#divisiFilter').on('change', function () {
         table.column(2) // change this to the index of the 'Divisi' column

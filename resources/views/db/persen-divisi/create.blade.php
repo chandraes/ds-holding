@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label for="komisaris_id" class="form-label">Komisaris</label>
-                            <select class="form-select" name="komisaris_id" id="komisaris_id">
+                            <select class="form-select" name="komisaris_id" id="komisaris_id" required>
                                 <option value="">-- Pilih Komisaris --</option>
                                 @foreach ($komisaris as $k)
                                 <option value="{{$k->id}}">{{$k->nama}}</option>
@@ -21,7 +21,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="divisi_id" class="form-label">Divisi</label>
-                            <select class="form-select" name="divisi_id">
+                            <select class="form-select" name="divisi_id" required>
                                 <option value="">-- Pilih Divisi --</option>
                                 @foreach ($divisi as $k)
                                 <option value="{{$k->id}}">{{$k->nama}}</option>
@@ -32,7 +32,7 @@
                         <div class="col-md-4 mb-3">
                             <label for="persen" class="form-label">Persentase</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control @if ($errors->has('harga'))
+                                <input type="text" class="form-control @if ($errors->has('persen'))
                             is-invalid
                         @endif" name="persen" id="persen" required>
                                 <span class="input-group-text" id="basic-addon1">%</span>
