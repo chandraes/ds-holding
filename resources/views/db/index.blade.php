@@ -18,6 +18,16 @@
                 <h2>KOMISARIS</h2>
             </a>
         </div>
+
+    </div>
+    <hr>
+    <div class="row justify-content-left">
+        <div class="col-md-3 mt-3 text-center">
+            <a href="{{route('persen-kas')}}" class="text-decoration-none">
+                <img src="{{asset('images/persen-kas.svg')}}" alt="" width="100">
+                <h2>PERSENTASE PEMBAGIAN KAS</h2>
+            </a>
+        </div>
         <div class="col-md-3 mt-3 text-center">
             <a href="{{route('persen-divisi')}}" class="text-decoration-none">
                 <img src="{{asset('images/persen-divisi.svg')}}" alt="" width="100">
@@ -33,12 +43,7 @@
     </div>
     <hr>
     <div class="row justify-content-left">
-        <div class="col-md-3 mt-3 text-center">
-            <a href="{{route('persen-kas')}}" class="text-decoration-none">
-                <img src="{{asset('images/persen-kas.svg')}}" alt="" width="100">
-                <h2>PERSENTASE PEMBAGIAN KAS</h2>
-            </a>
-        </div>
+
         <div class="col-md-3 mt-3 text-center">
             <a href="{{route('db.rekening')}}" class="text-decoration-none">
                 <img src="{{asset('images/rekening.svg')}}" alt="" width="100">
