@@ -96,9 +96,12 @@
 <script>
     function editInvestor(data, id) {
         document.getElementById('edit_nama').value = data.nama;
-        document.getElementById('edit_url').value = data.url;
+        document.getElementById('edit_no_wa').value = data.no_wa;
+        document.getElementById('edit_nama_rek').value = data.nama_rek;
+        document.getElementById('edit_no_rek').value = data.no_rek;
+        document.getElementById('edit_bank').value = data.bank;
         // Populate other fields...
-        document.getElementById('editForm').action = '/db/divisi/' + id + '/update';
+        document.getElementById('editForm').action = '/db/komisaris/' + id + '/update';
     }
 
     var no_wa = new Cleave('#no_wa', {
@@ -107,6 +110,16 @@
     });
 
     var no_rek = new Cleave('#no_rek', {
+        delimiter: '-',
+        blocks: [4, 4, 8]
+    });
+
+    var edit_no_wa = new Cleave('#edit_no_wa', {
+        delimiter: '-',
+        blocks: [4, 4, 8]
+    });
+
+    var edit_no_rek = new Cleave('#edit_no_rek', {
         delimiter: '-',
         blocks: [4, 4, 8]
     });

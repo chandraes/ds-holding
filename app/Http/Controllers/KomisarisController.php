@@ -33,11 +33,23 @@ class KomisarisController extends Controller
 
     public function update(Request $request, Komisaris $komisaris)
     {
+        $data = $request->validate([
+            'nama' => 'required',
+            'no_wa' => 'required',
+            'no_rek' => 'required',
+            'bank' => 'required',
+            'nama_rek' => 'required',
+        ]);
 
+        $komisaris->update($data);
+
+        return redirect()->back()->with('success', 'Data berhasil diubah');
     }
 
     public function destroy(Komisaris $komisaris)
     {
+        $komisaris->delete();
 
+        return redirect()->back()->with('success', 'Data berhasil dihapus');
     }
 }
