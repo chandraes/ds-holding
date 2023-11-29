@@ -40,6 +40,9 @@ Route::group(['middleware' => ['auth']], function() {
         Route::view('db', 'db.index')->name('db');
         Route::prefix('db')->group(function () {
 
+            Route::get('/persen-kas', [App\Http\Controllers\PersenKasController::class, 'index'])->name('persen-kas');
+            Route::patch('/persen-kas/{persenKas}/update', [App\Http\Controllers\PersenKasController::class, 'update'])->name('persen-kas.update');
+
             Route::get('/komisaris', [App\Http\Controllers\KomisarisController::class, 'index'])->name('komisaris');
             Route::post('/komisaris/store', [App\Http\Controllers\KomisarisController::class, 'store'])->name('komisaris.store');
             Route::patch('/komisaris/{komisaris}/update', [App\Http\Controllers\KomisarisController::class, 'update'])->name('komisaris.update');
