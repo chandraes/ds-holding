@@ -32,6 +32,7 @@
                 <th class="text-center align-middle" style="width: 5%">NO</th>
                 <th class="text-center align-middle">NAMA</th>
                 <th class="text-center align-middle">NO WA</th>
+                <th class="text-center align-middle">PERSENTASE SAHAM</th>
                 <th class="text-center align-middle">NAMA REK</th>
                 <th class="text-center align-middle">NO REK</th>
                 <th class="text-center align-middle">BANK</th>
@@ -44,6 +45,7 @@
                 <td class="text-center align-middle">{{$loop->iteration}}</td>
                 <td class="text-center align-middle">{{$d->nama}}</td>
                 <td class="text-center align-middle">{{$d->no_wa}}</td>
+                <td class="text-center align-middle">{{$d->persen_saham}}%</td>
                 <td class="text-center align-middle">{{$d->nama_rek}}</td>
                 <td class="text-center align-middle">{{$d->no_rek}}</td>
                 <td class="text-center align-middle">{{$d->bank}}</td>
@@ -97,6 +99,7 @@
     function editInvestor(data, id) {
         document.getElementById('edit_nama').value = data.nama;
         document.getElementById('edit_no_wa').value = data.no_wa;
+        document.getElementById('edit_persen_saham').value = data.persen_saham;
         document.getElementById('edit_nama_rek').value = data.nama_rek;
         document.getElementById('edit_no_rek').value = data.no_rek;
         document.getElementById('edit_bank').value = data.bank;

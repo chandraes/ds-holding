@@ -24,7 +24,14 @@ class KomisarisController extends Controller
             'no_rek' => 'required',
             'bank' => 'required',
             'nama_rek' => 'required',
+            'persen_saham' => 'required',
         ]);
+
+        $check = Komisaris::sum('persen_saham') + $data['persen_saham'];
+
+        if ($check > 100) {
+            return redirect()->back()->with('error', 'Persentase saham tidak boleh lebih dari 100%');
+        }
 
         Komisaris::create($data);
 
@@ -39,7 +46,14 @@ class KomisarisController extends Controller
             'no_rek' => 'required',
             'bank' => 'required',
             'nama_rek' => 'required',
+            'persen_saham' => 'required',
         ]);
+
+        $check = Komisaris::sum('persen_saham') - $komisaris->persen_saham + $data['persen_saham'];
+
+        if ($check > 100) {
+            return redirect()->back()->with('error', 'Persentase saham tidak boleh lebih dari 100%');
+        }
 
         $komisaris->update($data);
 

@@ -95,12 +95,24 @@
             </script>
             @endforeach
         </tbody>
+        <tfoot id="totalPersen" class="hide-footer">
+            <tr>
+                <th colspan="3" style="text-align:right">Total:</th>
+                <th class="text-center align-middle"></th>
+                <th></th>
+            </tr>
+        </tfoot>
     </table>
 </div>
 
 @endsection
 @push('css')
 <link href="{{asset('assets/css/dt.min.css')}}" rel="stylesheet">
+<style>
+    .hide-footer {
+        display: none;
+    }
+</style>
 @endpush
 @push('js')
 
@@ -118,12 +130,6 @@
 
 
 
-    $('#divisiFilter').on('change', function () {
-        table.column(2) // change this to the index of the 'Divisi' column
-            .search(this.value)
-            .draw();
-    });
-
     var table = $('#data').DataTable({
         paging: false,
         scrollCollapse: true,
@@ -134,7 +140,32 @@
             api.column(0, {page: 'current'}).nodes().each(function (cell, i) {
                 cell.innerHTML = startIndex + i + 1;
             });
+        },
+        footerCallback: function (row, data, start, end, display) {
+            var api = this.api();
+            var total = api
+                .column(3, { page: 'current'} )
+                .data()
+                .reduce(function (a, b) {
+                    return parseInt(a) + parseInt(b);
+                }, 0);
+            $(api.column(3).footer()).html(total+"%");
         }
+    });
+
+    $('#divisiFilter').on('change', function () {
+        if (this.value == "") {
+            $('#totalPersen').addClass('hide-footer');
+        } else {
+            $('#totalPersen').removeClass('hide-footer');
+        }
+
+        table.column(2) // change this to the index of the 'Divisi' column
+            .search(this.value)
+            .draw();
+
+        // show totalPersen
+
     });
 
     $('#createForm').submit(function(e){
