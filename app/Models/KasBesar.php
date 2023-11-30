@@ -49,6 +49,17 @@ class KasBesar extends Model
         return $this->max('nomor_kas_kecil') + 1;
     }
 
+    public function nomorDeposit()
+    {
+        return $this->max('nomor_deposit') + 1;
+    }
+
+    public function getFormatNomorDepositAttribute()
+    {
+
+        return $this->nomor_deposit != null ? "D".sprintf("%02d", $this->nomor_deposit) : '';
+    }
+
     public function getFormatNomorKasKecilAttribute()
     {
 
@@ -113,6 +124,54 @@ class KasBesar extends Model
         $data['saldo'] = $saldo + $data['nominal_transaksi'];
         $data['uraian'] = 'Coba masuk Saldo';
         $data['nama_rek'] = 'Kas Besar';
+
+        $store = $this->create($data);
+
+        return $store;
+    }
+
+    public function insertDeposit($data)
+    {
+        $rekening = Rekening::where('untuk', 'kas-besar')->first();
+
+        $data['tanggal'] = now();
+        $data['jenis'] = 1;
+        $data['nominal_transaksi'] = str_replace('.', '', $data['nominal_transaksi']);
+        $data['modal_investor'] = -$data['nominal_transaksi'];
+        $data['no_rek'] = $rekening->no_rek;
+        $data['nama_rek'] = $rekening->nama_rek;
+        $data['bank'] = $rekening->bank;
+        $data['nomor_deposit'] = $this->nomorDeposit();
+        $lastKasBesar = $this->lastKasBesar();
+
+        if ($lastKasBesar) {
+            $data['saldo'] = $lastKasBesar->saldo + $data['nominal_transaksi'];
+            $data['modal_investor_terakhir'] = $lastKasBesar->modal_investor_terakhir - $data['nominal_transaksi'];
+        } else {
+            $data['saldo'] = $data['nominal_transaksi'];
+            $data['modal_investor_terakhir'] = $data['modal_investor'];
+        }
+
+        $store = $this->create($data);
+
+        return $store;
+    }
+
+    public function insertWithdraw($data)
+    {
+        $rekening = Rekening::where('untuk', 'withdraw')->first();
+
+        $data['uraian'] = 'Withdraw';
+        $data['nominal_transaksi'] = str_replace('.', '', $data['nominal_transaksi']);
+        $data['jenis'] = 0;
+        $data['tanggal'] = now();
+        $data['nama_rek'] = substr($rekening->nama_rek, 0, 15);
+        $data['no_rek'] = $rekening->no_rek;
+        $data['bank'] = $rekening->bank;
+
+        $data['saldo'] = $this->lastKasBesar()->saldo - $data['nominal_transaksi'];
+        $data['modal_investor'] = $data['nominal_transaksi'];
+        $data['modal_investor_terakhir']= $last->modal_investor_terakhir + $data['nominal_transaksi'];
 
         $store = $this->create($data);
 

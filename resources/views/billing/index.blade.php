@@ -8,6 +8,13 @@
     <div class="row justify-content-left">
         @if (auth()->user()->role == 'admin')
         <div class="col-md-3 text-center mt-5">
+            <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#formDeposit">
+                <img src="{{asset('images/form-deposit.svg')}}" alt="" width="100">
+                <h2>FORM DEPOSIT</h2>
+            </a>
+            @include('billing.modal-form-deposit')
+        </div>
+        <div class="col-md-3 text-center mt-5">
             <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#modalKasKecil">
                 <img src="{{asset('images/form-kas-kecil.svg')}}" alt="" width="100">
                 <h2>FORM KAS KECIL</h2>
@@ -61,7 +68,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-3 text-center mt-5">
             <a href="{{route('home')}}" class="text-decoration-none">
                 <img src="{{asset('images/dashboard.svg')}}" alt="" width="100">
@@ -69,14 +76,6 @@
             </a>
         </div>
         @endif
-        <div class="col-md-3 text-center mt-5">
-            <form action="{{route('isi-saldo')}}" method="get" id="masukForm">
-                <button type="submit" class="text-decoration-none">
-                    <img src="{{asset('images/dashboard.svg')}}" alt="" width="100">
-                    <h2>ISI SALDO</h2>
-                </button>
-            </form>
-        </div>
         <div class="col-md-3 text-center mt-5">
             <a href="{{route('home')}}" class="text-decoration-none">
                 <img src="{{asset('images/dashboard.svg')}}" alt="" width="100">
@@ -89,6 +88,14 @@
 @push('js')
 <script>
 
+    function funDeposit(){
+        var selectDeposit = document.getElementById('selectDeposit').value;
+        if(selectDeposit == 'masuk'){
+            window.location.href = "{{route('form-deposit.masuk')}}";
+        }else if(selectDeposit == 'keluar'){
+            window.location.href = "{{route('form-deposit.keluar')}}";
+        }
+    }
     function funLain(){
         var selectLain = document.getElementById('selectLain').value;
         if(selectLain == 'masuk'){

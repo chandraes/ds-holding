@@ -40,6 +40,11 @@ Route::group(['middleware' => ['auth']], function() {
         Route::view('db', 'db.index')->name('db');
         Route::prefix('db')->group(function () {
 
+            Route::get('/form-deposit/masuk', [App\Http\Controllers\FormDepositController::class, 'masuk'])->name('form-deposit.masuk');
+            Route::post('/form-deposit/masuk/store', [App\Http\Controllers\FormDepositController::class, 'masuk_store'])->name('form-deposit.masuk.store');
+            Route::get('/form-deposit/keluar', [App\Http\Controllers\FormDepositController::class, 'keluar'])->name('form-deposit.keluar');
+            Route::post('/form-deposit/keluar/store', [App\Http\Controllers\FormDepositController::class, 'keluar_store'])->name('form-deposit.keluar.store');
+
             Route::get('/persen-kas', [App\Http\Controllers\PersenKasController::class, 'index'])->name('persen-kas');
             Route::patch('/persen-kas/{persenKas}/update', [App\Http\Controllers\PersenKasController::class, 'update'])->name('persen-kas.update');
 

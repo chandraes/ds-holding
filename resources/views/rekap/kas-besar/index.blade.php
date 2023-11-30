@@ -71,6 +71,7 @@
             <tr>
                 <th class="text-center align-middle">Tanggal</th>
                 <th class="text-center align-middle">Uraian</th>
+                <th class="text-center align-middle">Deposit</th>
                 <th class="text-center align-middle">Kas Kecil</th>
                 <th class="text-center align-middle">Masuk</th>
                 <th class="text-center align-middle">Keluar</th>
@@ -80,7 +81,7 @@
 
             </tr>
             <tr class="table-warning">
-                <td colspan="4" class="text-center align-middle">Saldo Bulan
+                <td colspan="5" class="text-center align-middle">Saldo Bulan
                     {{$stringBulan}} {{$tahunSebelumnya}}</td>
                 <td class="text-center align-middle"></td>
                 <td class="text-center align-middle">Rp. {{$dataSebelumnya ? number_format($dataSebelumnya->saldo,
@@ -95,6 +96,9 @@
                     <td class="text-center align-middle">{{$d->id_tanggal}}</td>
                     <td class="text-center align-middle">
                         {{$d->uraian}}
+                    </td>
+                    <td class="text-center align-middle">
+                        {{$d->format_nomor_deposit}}
                     </td>
                     <td class="text-center align-middle">
                         {{$d->format_nomor_kas_kecil}}
@@ -120,11 +124,12 @@
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
+                    <td class="text-center align-middle"></td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th class="text-center align-middle" colspan="3"><strong>GRAND TOTAL</strong></th>
+                    <th class="text-center align-middle" colspan="4"><strong>GRAND TOTAL</strong></th>
                     <th class="text-center align-middle"><strong>{{number_format($data->where('jenis',
                             1)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></th>
                     <th class="text-center align-middle text-danger"><strong>{{number_format($data->where('jenis',
