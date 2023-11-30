@@ -78,6 +78,7 @@
                 <th class="text-center align-middle">Saldo</th>
                 <th class="text-center align-middle">Transfer Ke</th>
                 <th class="text-center align-middle">Bank</th>
+                <th class="text-center align-middle">Modal Investor</th>
 
             </tr>
             <tr class="table-warning">
@@ -88,6 +89,8 @@
                     0, ',','.') : ''}}</td>
                 <td class="text-center align-middle"></td>
                 <td class="text-center align-middle"></td>
+                <td class="text-center align-middle">Rp. {{$dataSebelumnya ?
+                    number_format($dataSebelumnya->modal_investor_terakhir, 0,',','.') : ''}}</td>
             </tr>
             </thead>
             <tbody>
@@ -112,10 +115,12 @@
                     <td class="text-center align-middle">{{$d->nf_saldo}}</td>
                     <td class="text-center align-middle">{{$d->nama_rek}}</td>
                     <td class="text-center align-middle">{{$d->bank}}</td>
+                    <td class="text-center align-middle">{{$d->nf_modal_investor}}</td>
 
                 </tr>
                 @endforeach
                 <tr>
+                    <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
                     <td class="text-center align-middle"></td>
@@ -142,6 +147,11 @@
                     </th>
                     <th class="text-center align-middle"></th>
                     <th class="text-center align-middle"></th>
+                    <td class="text-center align-middle">
+                        <strong>
+                            {{$data->last() ? number_format($data->last()->modal_investor_terakhir, 0, ',', '.') : ''}}
+                        </strong>
+                    </td>
                 </tr>
             </tfoot>
         </table>

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('kas_besars', function (Blueprint $table) {
             $table->bigInteger('modal_investor')->nullable()->after('no_rek');
             $table->bigInteger('modal_investor_terakhir')->after('modal_investor');
-            $table->integer('nomor_deposit')->after('uraian');
+            $table->integer('nomor_deposit')->nullable()->after('uraian');
         });
     }
 

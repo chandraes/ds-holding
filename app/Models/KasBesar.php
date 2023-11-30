@@ -25,6 +25,11 @@ class KasBesar extends Model
         return number_format($this->nominal_transaksi, 0, ',', '.');
     }
 
+    public function getNfModalInvestorAttribute()
+    {
+        return number_format($this->modal_investor, 0, ',', '.');
+    }
+
     public function getNfSaldoAttribute()
     {
         return number_format($this->saldo, 0, ',', '.');
@@ -168,8 +173,8 @@ class KasBesar extends Model
         $data['nama_rek'] = substr($rekening->nama_rek, 0, 15);
         $data['no_rek'] = $rekening->no_rek;
         $data['bank'] = $rekening->bank;
-
-        $data['saldo'] = $this->lastKasBesar()->saldo - $data['nominal_transaksi'];
+        $last = $this->lastKasBesar();
+        $data['saldo'] = $last->saldo - $data['nominal_transaksi'];
         $data['modal_investor'] = $data['nominal_transaksi'];
         $data['modal_investor_terakhir']= $last->modal_investor_terakhir + $data['nominal_transaksi'];
 
