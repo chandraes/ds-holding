@@ -167,7 +167,6 @@ class KasBesar extends Model
         $rekening = Rekening::where('untuk', 'withdraw')->first();
 
         $data['uraian'] = 'Withdraw';
-        $data['nominal_transaksi'] = str_replace('.', '', $data['nominal_transaksi']);
         $data['jenis'] = 0;
         $data['tanggal'] = now();
         $data['nama_rek'] = substr($rekening->nama_rek, 0, 15);
