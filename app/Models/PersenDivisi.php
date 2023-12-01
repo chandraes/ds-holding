@@ -19,4 +19,11 @@ class PersenDivisi extends Model
     {
         return $this->belongsTo(Komisaris::class);
     }
+
+    public function persenKomisaris($divisiId, $komisarisId)
+    {
+        $db = $this->where('divisi_id', $divisiId)->where('komisaris_id', $komisarisId)->first()->persen ?? 0;
+
+        return $db;
+    }
 }

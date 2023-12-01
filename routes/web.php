@@ -55,9 +55,6 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::get('/persen-divisi', [App\Http\Controllers\PersenDivisiController::class, 'index'])->name('persen-divisi');
             Route::post('/persen-divisi/store', [App\Http\Controllers\PersenDivisiController::class, 'store'])->name('persen-divisi.store');
-            Route::patch('/persen-divisi/{persenDivisi}/update', [App\Http\Controllers\PersenDivisiController::class, 'update'])->name('persen-divisi.update');
-            Route::delete('/persen-divisi/destroy/{persenDivisi}', [App\Http\Controllers\PersenDivisiController::class, 'destroy'])->name('persen-divisi.delete');
-
 
             Route::get('/divisi', [App\Http\Controllers\DivisiController::class, 'index'])->name('db.divisi');
             Route::post('/divisi/store', [App\Http\Controllers\DivisiController::class, 'store'])->name('db.divisi.store');

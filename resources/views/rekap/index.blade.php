@@ -19,6 +19,12 @@
             </a>
         </div>
         <div class="col-md-3 mt-3 text-center">
+            <a href="{{route('rekap.kas-kecil')}}" class="text-decoration-none">
+                <img src="{{asset('images/kas-gaji-komisaris.svg')}}" alt="" width="100">
+                <h2>REKAP GAJI KOMISARIS</h2>
+            </a>
+        </div>
+        <div class="col-md-3 mt-3 text-center">
             <a href="{{route('home')}}" class="text-decoration-none">
                 <img src="{{asset('images/dashboard.svg')}}" alt="" width="100">
                 <h2>DASHBOARD</h2>
