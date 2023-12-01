@@ -15,11 +15,35 @@ class KasGajiKomisaris extends Model
         return $this->belongsTo(Divisi::class);
     }
 
+    public function getIdTanggalAttribute()
+    {
+        return date('d-m-Y', strtotime($this->tanggal));
+    }
+
     public function lastKas($divisiId)
     {
         $db = $this->where('divisi_id', $divisiId)->latest()->orderBy('id', 'desc')->first();
 
         return $db;
+    }
+
+    public function getNfNominalTransaksiAttribute()
+    {
+        return number_format($this->nominal_transaksi, 0, ',', '.');
+    }
+
+    public function getNominalTransaksiMasukAttribute()
+    {
+        if ($this->jenis == 1) {
+            return number_format($this->nominal_transaksi, 0, ',', '.');
+        }
+    }
+
+    public function getNominalTransaksiKeluarAttribute()
+    {
+        if ($this->jenis == 0) {
+            return number_format($this->nominal_transaksi, 0, ',', '.');
+        }
     }
 
     public function getNfSaldoAttribute()
@@ -42,7 +66,11 @@ class KasGajiKomisaris extends Model
         // Adjust for rounding errors
         $total = $kasBesarAmount + $kasGajiKomisarisAmount;
 
-        if ($total != $nominal) {
+        if($total < $nominal) {
+            $kasBesarAmount += $nominal - $total;
+        }
+
+        if($total > $nominal) {
             $kasBesarAmount -= $total - $nominal;
         }
 
@@ -53,20 +81,6 @@ class KasGajiKomisaris extends Model
         $kas['uraian'] = 'Dividen ';
 
         $kasGaji['uraian'] = 'Dividen';
-
-        if($db == null)
-        {
-            $db = $this->create([
-                'divisi_id' => $data['divisi_id'],
-                'saldo' => $kasGajiKomisarisAmount
-            ]);
-        } else {
-            $db->update([
-                'saldo' => $db->saldo + $kasGajiKomisarisAmount
-            ]);
-        }
-
-
 
 
 

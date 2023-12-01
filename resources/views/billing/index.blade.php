@@ -70,7 +70,7 @@
         </div>
 
         <div class="col-md-3 text-center mt-5">
-            <a href="{{route('home')}}" class="text-decoration-none">
+            <a href="{{route('form-dividen-divisi')}}" class="text-decoration-none">
                 <img src="{{asset('images/dividen-devisi.svg')}}" alt="" width="100">
                 <h2>FORM DIVIDEN DIVISI</h2>
             </a>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\KasBesar;
 use App\Models\KasKecil;
+use App\Models\KasGajiKomisaris;
+use App\Models\Divisi;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -147,5 +149,12 @@ class RekapController extends Controller
         ])->setPaper('a4', 'portrait');
 
         return $pdf->stream('Rekap Kas Kecil '.$stringBulanNow.' '.$tahun.'.pdf');
+    }
+
+    public function kas_gaji_komsiaris(Request $request)
+    {
+        $db = new Divisi;
+
+        $kasDivisi = $db->kas_gaji_komisaris_now();
     }
 }
