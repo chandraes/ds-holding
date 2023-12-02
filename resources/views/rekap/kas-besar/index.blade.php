@@ -119,18 +119,6 @@
 
                 </tr>
                 @endforeach
-                <tr>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                </tr>
             </tbody>
             <tfoot>
                 <tr>
@@ -162,7 +150,6 @@
 <link href="{{asset('assets/css/dt.min.css')}}" rel="stylesheet">
 @endpush
 @push('js')
-<script src="{{asset('assets/plugins/date-picker/date-picker.js')}}"></script>
 <script src="{{asset('assets/js/dt5.min.js')}}"></script>
 <script>
 
@@ -173,11 +160,6 @@
             "searching": false,
             "scrollCollapse": true,
             "scrollY": "550px",
-            "fixedColumns": {
-                "leftColumns": 4,
-                "rightColumns": 2
-            },
-
         });
 
     });

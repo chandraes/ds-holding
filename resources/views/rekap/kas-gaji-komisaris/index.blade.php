@@ -134,17 +134,4 @@
 <script src="{{asset('assets/plugins/date-picker/date-picker.js')}}"></script>
 <script src="{{asset('assets/js/dt5.min.js')}}"></script>
 @endpush
-@push('js')
-<script>
-    $(document).ready(function() {
-        $('#rekapTable').DataTable({
-            "paging": false,
-            "ordering": false,
-            "searching": false,
-            "scrollCollapse": true,
-            "scrollY": "550px",
-        });
-    });
 
-</script>
-@endpush
