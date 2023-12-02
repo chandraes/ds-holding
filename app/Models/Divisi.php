@@ -15,8 +15,15 @@ class Divisi extends Model
         return $this->hasMany(KasGajiKomisaris::class);
     }
 
-    public function kas_gaji_komisaris_now($month, $year)
+    public function kasGajiKomisarisNow($month, $year)
     {
         return $this->kas_gaji_komisaris()->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->get();
     }
+
+    public function lastKasGajiKomisarisByMonth($month, $year)
+    {
+        return $this->kas_gaji_komisaris()->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->latest()->first();
+    }
+
+
 }

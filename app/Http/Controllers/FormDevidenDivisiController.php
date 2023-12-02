@@ -6,6 +6,7 @@ use App\Models\KasGajiKomisaris;
 use App\Models\Divisi;
 use App\Models\PersenKas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class FormDevidenDivisiController extends Controller
 {
@@ -22,13 +23,18 @@ class FormDevidenDivisiController extends Controller
     {
         $data = $request->validate([
             'divisi_id' => 'required|exists:divisis,id',
-            'nominal' => 'required',
+            'nominal_transaksi' => 'required',
         ]);
-
-        $divisi = Divisi::findOrFail($data['divisi_id']);
 
         $db = new KasGajiKomisaris();
 
-        
+        DB::beginTransaction();
+
+        $db->insertDividen($data);
+
+        DB::commit();
+
+        return redirect()->route('billing')->with('success', 'Berhasil menambahkan data');
+
     }
 }

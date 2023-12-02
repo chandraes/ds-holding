@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::prefix('db')->group(function () {
 
             Route::get('/form-dividen-divisi', [App\Http\Controllers\FormDevidenDivisiController::class, 'index'])->name('form-dividen-divisi');
+            Route::post('/form-dividen-divisi/store', [App\Http\Controllers\FormDevidenDivisiController::class, 'store'])->name('form-dividen-divisi.store');
 
             Route::get('/form-deposit/masuk', [App\Http\Controllers\FormDepositController::class, 'masuk'])->name('form-deposit.masuk');
             Route::post('/form-deposit/masuk/store', [App\Http\Controllers\FormDepositController::class, 'masuk_store'])->name('form-deposit.masuk.store');
@@ -88,6 +89,8 @@ Route::group(['middleware' => ['auth']], function() {
 
         Route::get('/kas-besar', [App\Http\Controllers\RekapController::class, 'kas_besar'])->name('rekap.kas-besar');
         Route::get('/kas-besar/print/{bulan}/{tahun}', [App\Http\Controllers\RekapController::class, 'kas_besar_print'])->name('rekap.kas-besar.print');
+
+        Route::get('/kas-gaji-komisaris', [App\Http\Controllers\RekapController::class, 'kas_gaji_komsiaris'])->name('rekap.kas-gaji-komisaris');
     });
 });
 

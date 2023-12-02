@@ -12,21 +12,22 @@
         <div class="col-md-6">
             <table class="table">
                 <tr class="text-center">
-                    <td class="text-center align-middle"><a href="{{route('home')}}"><img src="{{asset('images/dashboard.svg')}}" alt="dashboard"
-                                width="30"> Dashboard</a></td>
-                    <td class="text-center align-middle"><a href="{{route('rekap')}}"><img src="{{asset('images/rekap.svg')}}" alt="dokumen"
-                                width="30"> REKAP</a></td>
-                    <td class="text-center align-middle">
-                        <a href="{{route('rekap.kas-besar.print', ['bulan' => $bulan, 'tahun' => $tahun])}}" target="_blank"><img src="{{asset('images/print.svg')}}" alt="dokumen"
-                            width="30"> PRINT PDF</a>
-                    </td>
+                    <td class="text-center align-middle"><a href="{{route('home')}}"><img
+                                src="{{asset('images/dashboard.svg')}}" alt="dashboard" width="30"> Dashboard</a></td>
+                    <td class="text-center align-middle"><a href="{{route('rekap')}}"><img
+                                src="{{asset('images/rekap.svg')}}" alt="dokumen" width="30"> REKAP</a></td>
+                    {{-- <td class="text-center align-middle">
+                        <a href="{{route('rekap.kas-besar.print', ['bulan' => $bulan, 'tahun' => $tahun])}}"
+                            target="_blank"><img src="{{asset('images/print.svg')}}" alt="dokumen" width="30"> PRINT
+                            PDF</a>
+                    </td> --}}
                 </tr>
             </table>
         </div>
     </div>
 </div>
 <div class="container-fluid mt-5">
-    <form action="{{route('rekap.kas-besar')}}" method="get">
+    <form action="{{route('rekap.kas-gaji-komisaris')}}" method="get">
         <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="bulan" class="form-label">Bulan</label>
@@ -59,103 +60,60 @@
             </div>
             {{-- <div class="col-md-3 mb-3">
                 <label for="showPrint" class="form-label">&nbsp;</label>
-                <a href="{{route('rekap.kas-besar.preview', ['bulan' => $bulan, 'tahun' => $tahun])}}" target="_blank" class="btn btn-secondary form-control" id="btn-cari">Print Preview</a>
+                <a href="{{route('rekap.kas-besar.preview', ['bulan' => $bulan, 'tahun' => $tahun])}}" target="_blank"
+                    class="btn btn-secondary form-control" id="btn-cari">Print Preview</a>
             </div> --}}
         </div>
     </form>
 </div>
 <div class="container-fluid table-responsive ml-3">
+    @foreach ($divisi as $d)
     <div class="row mt-3">
-        <table class="table table-hover table-bordered" id="rekapTable">
-            <thead class=" table-success">
-            <tr>
-                <th class="text-center align-middle">Tanggal</th>
-                <th class="text-center align-middle">Uraian</th>
-                <th class="text-center align-middle">Deposit</th>
-                <th class="text-center align-middle">Kas Kecil</th>
-                <th class="text-center align-middle">Masuk</th>
-                <th class="text-center align-middle">Keluar</th>
-                <th class="text-center align-middle">Saldo</th>
-                <th class="text-center align-middle">Transfer Ke</th>
-                <th class="text-center align-middle">Bank</th>
-                <th class="text-center align-middle">Modal Investor</th>
-
-            </tr>
-            <tr class="table-warning">
-                <td colspan="5" class="text-center align-middle">Saldo Bulan
-                    {{$stringBulan}} {{$tahunSebelumnya}}</td>
-                <td class="text-center align-middle"></td>
-                <td class="text-center align-middle">Rp. {{$dataSebelumnya ? number_format($dataSebelumnya->saldo,
-                    0, ',','.') : ''}}</td>
-                <td class="text-center align-middle"></td>
-                <td class="text-center align-middle"></td>
-                <td class="text-center align-middle">Rp. {{$dataSebelumnya ?
-                    number_format($dataSebelumnya->modal_investor_terakhir, 0,',','.') : ''}}</td>
-            </tr>
+        <h3>{{$d->nama}}</h3>
+        <table class="table table-bordered table-hover">
+            <thead class="table-success">
+                <tr>
+                    <th class="text-center align-middl">Tanggal</th>
+                    <th class="text-center align-middl">Uraian</th>
+                    <th class="text-center align-middl">Masuk</th>
+                    <th class="text-center align-middl">Keluar</th>
+                    <th class="text-center align-middl">Saldo</th>
+                </tr>
             </thead>
             <tbody>
-                @foreach ($data as $d)
+                @foreach ($d->kasGajiKomisarisNow($bulan, $tahun) as $k)
                 <tr>
-                    <td class="text-center align-middle">{{$d->id_tanggal}}</td>
-                    <td class="text-center align-middle">
-                        {{$d->uraian}}
-                    </td>
-                    <td class="text-center align-middle">
-                        {{$d->format_nomor_deposit}}
-                    </td>
-                    <td class="text-center align-middle">
-                        {{$d->format_nomor_kas_kecil}}
-                    </td>
-                    <td class="text-center align-middle">
-                        {{$d->nominal_transaksi_masuk}}
-                    </td>
-                    <td class="text-center align-middle text-danger">
-                        {{$d->nominal_transaksi_keluar}}
-                    </td>
-                    <td class="text-center align-middle">{{$d->nf_saldo}}</td>
-                    <td class="text-center align-middle">{{$d->nama_rek}}</td>
-                    <td class="text-center align-middle">{{$d->bank}}</td>
-                    <td class="text-center align-middle">{{$d->nf_modal_investor}}</td>
-
+                    <td class="text-center align-middle">{{$k->id_tanggal}}</td>
+                    <td class="text-center align-middle">{{$k->uraian}}</td>
+                    <td class="text-center align-middle">{{$k->nf_nominal_transaksi_masuk}}</td>
+                    <td class="text-center align-middle">{{$k->nf_nominal_transaksi_keluar}}</td>
+                    <td class="text-center align-middle">{{$k->nf_saldo}}</td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                    <td class="text-center align-middle"></td>
-                </tr>
             </tbody>
             <tfoot>
                 <tr>
-                    <th class="text-center align-middle" colspan="4"><strong>GRAND TOTAL</strong></th>
-                    <th class="text-center align-middle"><strong>{{number_format($data->where('jenis',
-                            1)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></th>
-                    <th class="text-center align-middle text-danger"><strong>{{number_format($data->where('jenis',
-                            0)->sum('nominal_transaksi'), 0, ',', '.')}}</strong></th>
-                    {{-- latest saldo --}}
+                    <th class="text-center align-middle" colspan="2"><b>Total</b></th>
                     <th class="text-center align-middle">
-                        <strong>
-                            {{$data->last() ? number_format($data->last()->saldo, 0, ',', '.') : ''}}
-                        </strong>
+                        {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_masuk'), 0, ',', '.')}}
                     </th>
-                    <th class="text-center align-middle"></th>
-                    <th class="text-center align-middle"></th>
-                    <td class="text-center align-middle">
-                        <strong>
-                            {{$data->last() ? number_format($data->last()->modal_investor_terakhir, 0, ',', '.') : ''}}
-                        </strong>
-                    </td>
+                    <th class="text-center align-middle">
+                        {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_keluar'), 0, ',', '.')}}
+                    </th>
+                    <th class="text-center align-middle">
+                        @php
+                            $saldo = $d->lastKasGajiKomisarisByMonth($bulan, $tahun)->saldo ?? 0;
+                        @endphp
+                        {{number_format($saldo, 0, ',', '.')}}
+                    </th>
                 </tr>
             </tfoot>
         </table>
+        <br>
+        <hr>
     </div>
+    @endforeach
+
 </div>
 @endsection
 @push('css')
@@ -165,7 +123,6 @@
 <script src="{{asset('assets/plugins/date-picker/date-picker.js')}}"></script>
 <script src="{{asset('assets/js/dt5.min.js')}}"></script>
 <script>
-
     $(document).ready(function() {
         $('#rekapTable').DataTable({
             "paging": false,

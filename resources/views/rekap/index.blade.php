@@ -19,7 +19,7 @@
             </a>
         </div>
         <div class="col-md-3 mt-3 text-center">
-            <a href="{{route('rekap.kas-kecil')}}" class="text-decoration-none">
+            <a href="{{route('rekap.kas-gaji-komisaris')}}" class="text-decoration-none">
                 <img src="{{asset('images/kas-gaji-komisaris.svg')}}" alt="" width="100">
                 <h2>REKAP GAJI KOMISARIS</h2>
             </a>
