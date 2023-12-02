@@ -68,60 +68,73 @@
 </div>
 <div class="container-fluid table-responsive ml-3">
     @foreach ($divisi as $d)
-    <div class="row mt-3">
+    <div class="row mt-3 table-responsive">
         <h3>{{$d->nama}}</h3>
-        <table class="table table-bordered table-hover">
-            <thead class="table-success">
-                <tr>
-                    <th class="text-center align-middl">Tanggal</th>
-                    <th class="text-center align-middl">Uraian</th>
-                    <th class="text-center align-middl">Masuk</th>
-                    <th class="text-center align-middl">Keluar</th>
-                    <th class="text-center align-middl">Saldo</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($d->kasGajiKomisarisNow($bulan, $tahun) as $k)
-                <tr>
-                    <td class="text-center align-middle">{{$k->id_tanggal}}</td>
-                    <td class="text-center align-middle">{{$k->uraian}}</td>
-                    <td class="text-center align-middle">{{$k->nf_nominal_transaksi_masuk}}</td>
-                    <td class="text-center align-middle">{{$k->nf_nominal_transaksi_keluar}}</td>
-                    <td class="text-center align-middle">{{$k->nf_saldo}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th class="text-center align-middle" colspan="2"><b>Total</b></th>
-                    <th class="text-center align-middle">
-                        {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_masuk'), 0, ',', '.')}}
-                    </th>
-                    <th class="text-center align-middle">
-                        {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_keluar'), 0, ',', '.')}}
-                    </th>
-                    <th class="text-center align-middle">
-                        @php
-                            $saldo = $d->lastKasGajiKomisarisByMonth($bulan, $tahun)->saldo ?? 0;
-                        @endphp
-                        {{number_format($saldo, 0, ',', '.')}}
-                    </th>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="mb-3">
+            <table class="table table-bordered table-hover" id="kasDivisi-{{$d->id}}">
+                <thead class="table-success">
+                    <tr>
+                        <th class="text-center align-middl">Tanggal</th>
+                        <th class="text-center align-middl">Uraian</th>
+                        <th class="text-center align-middl">Masuk</th>
+                        <th class="text-center align-middl">Keluar</th>
+                        <th class="text-center align-middl">Saldo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($d->kasGajiKomisarisNow($bulan, $tahun) as $k)
+                    <tr>
+                        <td class="text-center align-middle">{{$k->id_tanggal}}</td>
+                        <td class="text-center align-middle">{{$k->uraian}}</td>
+                        <td class="text-center align-middle">{{$k->nf_nominal_transaksi_masuk}}</td>
+                        <td class="text-center align-middle">{{$k->nf_nominal_transaksi_keluar}}</td>
+                        <td class="text-center align-middle">{{$k->nf_saldo}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="text-center align-middle" colspan="2"><b>Total</b></th>
+                        <th class="text-center align-middle">
+                            {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_masuk'), 0, ',', '.')}}
+                        </th>
+                        <th class="text-center align-middle">
+                            {{number_format($d->kasGajiKomisarisNow($bulan, $tahun)->sum('nominal_transaksi_keluar'), 0, ',', '.')}}
+                        </th>
+                        <th class="text-center align-middle">
+                            @php
+                                $saldo = $d->lastKasGajiKomisarisByMonth($bulan, $tahun)->saldo ?? 0;
+                            @endphp
+                            {{number_format($saldo, 0, ',', '.')}}
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
         <br>
         <hr>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#kasDivisi-{{$d->id}}').DataTable({
+                "paging": false,
+                "ordering": false,
+                "searching": false,
+                "info": false,
+                "autoWidth": false,
+            });
+        });
+    </script>
     @endforeach
-
 </div>
 @endsection
 @push('css')
 <link href="{{asset('assets/css/dt.min.css')}}" rel="stylesheet">
-@endpush
-@push('js')
 <script src="{{asset('assets/plugins/date-picker/date-picker.js')}}"></script>
 <script src="{{asset('assets/js/dt5.min.js')}}"></script>
+@endpush
+@push('js')
 <script>
     $(document).ready(function() {
         $('#rekapTable').DataTable({
@@ -130,13 +143,7 @@
             "searching": false,
             "scrollCollapse": true,
             "scrollY": "550px",
-            "fixedColumns": {
-                "leftColumns": 4,
-                "rightColumns": 2
-            },
-
         });
-
     });
 
 </script>
