@@ -83,7 +83,8 @@ class KasBesar extends Model
 
     public function lastKasBesarByMonth($month, $year)
     {
-        return $this->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->latest()->orderBy('id', 'desc')->first();
+        return $this->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->latest()->orderBy('id', 'desc')->first() ??
+                $this->latest()->orderBy('id', 'desc')->first();
     }
 
     public function insertMasuk($data)
